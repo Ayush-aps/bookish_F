@@ -1,0 +1,187 @@
+<%- include('partials/header') %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold mb-4">Pricing & Revenue Model</h1>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Choose the plan that works best for you. Whether you're a casual reader or a book enthusiast, we have options to suit your needs.</p>
+  </div>
+  
+  <!-- Buyer Plans -->
+  <div class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-8">Reader Plans</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <% plans.forEach(plan => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+          <div class="p-6 bg-gray-50 border-b border-gray-200">
+            <h3 class="text-2xl font-bold text-center"><%= plan.name %></h3>
+            <div class="text-center mt-4">
+              <span class="text-4xl font-bold">₹<%= plan.price %></span>
+              <% if (plan.period) { %>
+                <span class="text-gray-600">/<%= plan.period %></span>
+              <% } %>
+            </div> 
+          </div>
+          <div class="p-6">
+            <ul class="space-y-3">
+              <% plan.features.forEach(feature => { %>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><%= feature %></span>
+                </li>
+              <% }) %>
+            </ul>
+            <div class="mt-8 text-center">
+              <a href="/auth/register?plan=<%= plan.name.toLowerCase() %>" class="inline-block bg-primary text-dark px-6 py-3 rounded-md hover:bg-opacity-90 transition w-full">
+                Get Started
+              </a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  
+  <!-- Seller Plans -->
+  <div class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-8">Seller Plans</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <% sellerFees.forEach(fee => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform hover:scale-105">
+          <div class="p-6 bg-gray-50 border-b border-gray-200">
+            <h3 class="text-2xl font-bold text-center"><%= fee.name %></h3>
+            <div class="text-center mt-4">
+              <div class="text-2xl font-bold">Commission: <%= fee.fee %></div>
+              <% if (fee.monthlyFee) { %>
+                <div class="text-gray-600 mt-1">+ ₹<%= fee.monthlyFee %>/month</div>
+              <% } %>
+            </div>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-3">
+              <% fee.features.forEach(feature => { %>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><%= feature %></span>
+                </li>
+              <% }) %>
+            </ul>
+            <div class="mt-8 text-center">
+              <a href="/auth/register?role=seller&plan=<%= fee.name.toLowerCase().replace(' ', '-') %>" class="inline-block bg-primary text-dark px-6 py-3 rounded-md hover:bg-opacity-90 transition w-full">
+                Become a Seller
+              </a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  
+  <!-- Revenue Model -->
+  <div class="bg-white rounded-lg shadow-md p-8 mb-16">
+    <h2 class="text-3xl font-bold text-center mb-8">Our Revenue Model</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="bg-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-percentage text-2xl text-dark"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Commission-Based</h3>
+        <p class="text-gray-600">We take a small commission on each book sold through our platform, ranging from 8-10% depending on the seller plan.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-credit-card text-2xl text-dark"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Subscription Model</h3>
+        <p class="text-gray-600">Premium and Premium Plus subscriptions provide additional revenue while offering enhanced features to our dedicated readers.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-ad text-2xl text-dark"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Advertising</h3>
+        <p class="text-gray-600">Targeted advertising for publishers and authors helps them reach potential readers while generating additional revenue.</p>
+      </div>
+    </div>
+    
+    <div class="mt-12">
+      <h3 class="text-2xl font-semibold mb-4">Additional Revenue Streams</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-start">
+            <i class="fas fa-truck text-primary text-xl mt-1 mr-3"></i>
+            <div>
+              <h4 class="font-semibold mb-1">Delivery Fees</h4>
+              <p class="text-gray-600">Standard delivery fees apply for orders below ₹500. Free shipping for orders above ₹500 encourages larger purchases.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-start">
+            <i class="fas fa-handshake text-primary text-xl mt-1 mr-3"></i>
+            <div>
+              <h4 class="font-semibold mb-1">B2B Partnerships</h4>
+              <p class="text-gray-600">We partner with libraries, educational institutions, and corporate clients for bulk orders with special pricing.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-start">
+            <i class="fas fa-book-reader text-primary text-xl mt-1 mr-3"></i>
+            <div>
+              <h4 class="font-semibold mb-1">E-book & Audiobook Sales</h4>
+              <p class="text-gray-600">Digital content provides higher margins and is available exclusively to our Premium and Premium Plus subscribers.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-start">
+            <i class="fas fa-chart-line text-primary text-xl mt-1 mr-3"></i>
+            <div>
+              <h4 class="font-semibold mb-1">Data Analytics</h4>
+              <p class="text-gray-600">We provide anonymized market insights and reading trends to publishers and authors as a premium service.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- FAQ -->
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+    
+    <div class="space-y-6">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Can I upgrade my plan later?</h3>
+        <p class="text-gray-600">Yes, you can upgrade or downgrade your plan at any time. Changes will take effect at the start of your next billing cycle.</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">How do I get paid as a seller?</h3>
+        <p class="text-gray-600">Sellers receive payments every 15 days for all completed orders. Payments are made directly to your registered bank account after deducting the applicable commission.</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Is there a limit to how many books I can sell?</h3>
+        <p class="text-gray-600">Basic Sellers can list up to 50 books at a time. Professional Sellers have unlimited listings. All books must be approved by our content moderation team before they appear on the marketplace.</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Can I cancel my subscription?</h3>
+        <p class="text-gray-600">Yes, you can cancel your subscription at any time. You'll continue to have access to your subscription benefits until the end of your current billing period.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+

@@ -1,0 +1,270 @@
+<%- include('../partials/header') %>
+
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl font-bold mb-6">System Reports</h1>
+  
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex items-center">
+        <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+          <i class="fas fa-users text-xl text-dark"></i>
+        </div>
+        <div>
+          <p class="text-gray-600 text-sm">Total Users</p>
+          <h3 class="text-2xl font-bold"><%= counts.users %></h3>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= Math.round(userDistribution.buyers / counts.users * 100) %>%"></div>
+        </div>
+        <div class="flex justify-between text-xs mt-1">
+          <span><%= userDistribution.buyers %> Buyers</span>
+          <span><%= userDistribution.sellers %> Sellers</span>
+          <span><%= userDistribution.admins %> Admins</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex items-center">
+        <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+          <i class="fas fa-book text-xl text-dark"></i>
+        </div>
+        <div>
+          <p class="text-gray-600 text-sm">Total Books</p>
+          <h3 class="text-2xl font-bold"><%= counts.books %></h3>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-green-600 h-2.5 rounded-full" style="width: <%= Math.round(bookDistribution.new / counts.books * 100) %>%"></div>
+        </div>
+        <div class="flex justify-between text-xs mt-1">
+          <span><%= bookDistribution.new %> New</span>
+          <span><%= bookDistribution.used %> Used</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex items-center">
+        <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+          <i class="fas fa-shopping-cart text-xl text-dark"></i>
+        </div>
+        <div>
+          <p class="text-gray-600 text-sm">Total Orders</p>
+          <h3 class="text-2xl font-bold"><%= counts.orders %></h3>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-amber-600 h-2.5 rounded-full" style="width: <%= Math.round((orderDistribution.processing + orderDistribution.shipped) / counts.orders * 100) %>%"></div>
+        </div>
+        <div class="flex justify-between text-xs mt-1">
+          <span><%= orderDistribution.processing %> Processing</span>
+          <span><%= orderDistribution.shipped %> Shipped</span>
+          <span><%= orderDistribution.delivered %> Delivered</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Charts -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4">User Distribution</h2>
+      <div class="h-64">
+        <canvas id="userChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4">Order Status</h2>
+      <div class="h-64">
+        <canvas id="orderChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <!-- System Health -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4">System Health</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-medium">CPU Usage</h3>
+          <span class="text-sm text-gray-500"><%= systemHealth.cpu %></span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-blue-600 h-2.5 rounded-full" style="width: <%= parseInt(systemHealth.cpu) %>%"></div>
+        </div>
+      </div>
+      
+      <div class="border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-medium">Memory Usage</h3>
+          <span class="text-sm text-gray-500"><%= systemHealth.memory %></span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-purple-600 h-2.5 rounded-full" style="width: 30%"></div>
+        </div>
+      </div>
+      
+      <div class="border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-medium">Disk Usage</h3>
+          <span class="text-sm text-gray-500"><%= systemHealth.disk %></span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-green-600 h-2.5 rounded-full" style="width: 24%"></div>
+        </div>
+      </div>
+      
+      <div class="border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-medium">Uptime</h3>
+          <span class="text-sm text-gray-500"><%= systemHealth.uptime %></span>
+        </div>
+        <div class="text-sm text-gray-600 mt-2">
+          <p>Last restart: <%= new Date(systemHealth.lastRestart).toLocaleString() %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Recent Activity -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Recent Users</h2>
+        <a href="/admin/users" class="text-primary hover:text-dark text-sm">View All</a>
+      </div>
+      <div class="space-y-4">
+        <% recentUsers.forEach(user => { %>
+          <div class="flex items-center">
+            <img src="<%= user.profileImage %>" alt="<%= user.name %>" class="w-10 h-10 rounded-full mr-3">
+            <div class="flex-grow">
+              <div class="flex justify-between">
+                <h3 class="font-medium"><%= user.name %></h3>
+                <span class="text-xs text-gray-500"><%= new Date(user.createdAt).toLocaleDateString() %></span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600"><%= user.email %></span>
+                <span class="capitalize <%= user.role === 'admin' ? 'text-red-600' : user.role === 'seller' ? 'text-green-600' : 'text-blue-600' %>">
+                  <%= user.role %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Recent Orders</h2>
+        <a href="/admin/orders" class="text-primary hover:text-dark text-sm">View All</a>
+      </div>
+      <div class="space-y-4">
+        <% recentOrders.forEach(order => { %>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-shopping-bag text-gray-500"></i>
+            </div>
+            <div class="flex-grow">
+              <div class="flex justify-between">
+                <h3 class="font-medium">Order #<%= order._id.toString().substr(-6) %></h3>
+                <span class="text-xs text-gray-500"><%= new Date(order.orderDate).toLocaleDateString() %></span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600"><%= order.user.name %></span>
+                <span class="font-medium">₹<%= order.totalAmount %></span>
+              </div>
+            </div>
+            <div class="ml-2">
+              <% if (order.orderStatus === 'processing') { %>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                  Processing
+                </span>
+              <% } else if (order.orderStatus === 'shipped') { %>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                  Shipped
+                </span>
+              <% } else if (order.orderStatus === 'delivered') { %>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  Delivered
+                </span>
+              <% } else { %>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                  Cancelled
+                </span>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // User Distribution Chart
+    const userCtx = document.getElementById('userChart').getContext('2d');
+    const userChart = new Chart(userCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Buyers', 'Sellers', 'Admins'],
+        datasets: [{
+          data: [<%= userDistribution.buyers %>, <%= userDistribution.sellers %>, <%= userDistribution.admins %>],
+          backgroundColor: ['#3b82f6', '#10b981', '#ef4444'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+    
+    // Order Status Chart
+    const orderCtx = document.getElementById('orderChart').getContext('2d');
+    const orderChart = new Chart(orderCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Processing', 'Shipped', 'Delivered', 'Cancelled'],
+        datasets: [{
+          data: [
+            <%= orderDistribution.processing %>,  
+            <%= orderDistribution.shipped %>, 
+            <%= orderDistribution.delivered %>, 
+            <%= orderDistribution.cancelled %>
+          ],
+          backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#ef4444'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>
+

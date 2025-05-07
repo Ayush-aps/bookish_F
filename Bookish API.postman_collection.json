@@ -1,0 +1,350 @@
+{
+  "info": {
+    "_postman_id": "e5f7b8c9-d0a1-4b2e-8f3c-6d7e8f9a0b1c",
+    "name": "Bookish API",
+    "description": "API collection for the Bookish online book marketplace",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"password2\": \"password123\",\n    \"role\": \"buyer\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout a user"
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Buyer",
+      "item": [
+        {
+          "name": "Browse Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/browse?search=fiction&genre=Mystery&condition=new&minPrice=100&maxPrice=500&sort=price-asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "browse"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "fiction"
+                },
+                {
+                  "key": "genre",
+                  "value": "Mystery"
+                },
+                {
+                  "key": "condition",
+                  "value": "new"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "100"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "500"
+                },
+                {
+                  "key": "sort",
+                  "value": "price-asc"
+                }
+              ]
+            },
+            "description": "Browse books with filters"
+          },
+          "response": []
+        },
+        {
+          "name": "Book Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/book/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "book", "{{bookId}}"]
+            },
+            "description": "Get book details"
+          },
+          "response": []
+        },
+        {
+          "name": "View Cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/cart",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "cart"]
+            },
+            "description": "View shopping cart"
+          },
+          "response": []
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buyer/cart/add/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "cart", "add", "{{bookId}}"]
+            },
+            "description": "Add book to cart"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buyer/cart/update/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "cart", "update", "{{itemId}}"]
+            },
+            "description": "Update cart item quantity"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/cart/remove/{{itemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "cart", "remove", "{{itemId}}"]
+            },
+            "description": "Remove item from cart"
+          },
+          "response": []
+        },
+        {
+          "name": "View Library",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/library",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "library"]
+            },
+            "description": "View purchased books"
+          },
+          "response": []
+        },
+        {
+          "name": "Video Feed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buyer/video-feed",
+              "host": ["{{baseUrl}}"],
+              "path": ["buyer", "video-feed"]
+            },
+            "description": "View video feed"
+          },
+          "response": []
+        }
+      ],
+      "description": "Buyer endpoints"
+    },
+    {
+      "name": "Seller",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/seller/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["seller", "dashboard"]
+            },
+            "description": "Seller dashboard"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Book Form",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/seller/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["seller", "upload"]
+            },
+            "description": "Get book upload form"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Test Author\",\n    \"description\": \"This is a test book description.\",\n    \"isbn\": \"1234567890123\",\n    \"price\": 299,\n    \"discountPrice\": 249,\n    \"publisher\": \"Test Publisher\",\n    \"publishedDate\": \"2023-01-01\",\n    \"pageCount\": 250\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/seller/book",
+              "host": ["{{baseUrl}}"],
+              "path": ["seller", "book"]
+            },
+            "description": "Upload a new book"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Book",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Test Book\",\n    \"author\": \"Updated Test Author\",\n    \"description\": \"This is an updated test book description.\",\n    \"price\": 349,\n    \"discountPrice\": 299\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/seller/book/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["seller", "book", "{{bookId}}"]
+            },
+            "description": "Update an existing book"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/seller/book/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["seller", "book", "{{bookId}}"]
+            },
+            "description": "Delete a book"
+          },
+          "response": []
+        }
+      ],
+      "description": "Seller endpoints"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "bookId",
+      "value": "123",
+      "description": "ID of the book"
+    },
+    {
+      "key": "itemId",
+      "value": "456",
+      "description": "ID of the item in the cart"
+    }
+  ]
+}
+

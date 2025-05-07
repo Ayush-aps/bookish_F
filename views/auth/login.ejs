@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold text-center mb-6">Login to Bookish</h2>
+      
+      <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <ul class="list-disc list-inside">
+            <% errors.forEach(function(error) { %>
+              <li><%= error.msg %></li>
+            <% }); %>
+          </ul>
+        </div>
+      <% } %>
+      
+      <form action="/auth/login" method="POST">
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+          <input type="email" id="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary">
+        </div>
+        
+        <div class="mb-6">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input type="password" id="password" name="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary">
+          <div class="flex justify-end mt-1">
+            <a href="/auth/forgot-password" class="text-sm text-primary hover:text-dark">Forgot Password?</a>
+          </div>
+        </div>
+        
+        <div class="mb-6">
+          <button type="submit" class="w-full bg-primary text-dark px-4 py-2 rounded-md hover:bg-opacity-90 transition">
+            Login
+          </button>
+        </div>
+        
+        <div class="text-center">
+          <p class="text-gray-600">Don't have an account? <a href="/auth/register" class="text-primary hover:text-dark">Register</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+

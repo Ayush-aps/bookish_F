@@ -1,0 +1,83 @@
+</main>
+ 
+  <!-- Footer -->
+  <footer class="bg-dark text-white">
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- About -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">About Bookish</h3>
+          <p class="text-sm">Bookish is an online book marketplace that connects book lovers with sellers. Browse, buy, and sell books with ease.</p>
+          <div class="mt-4 flex space-x-4">
+            <a href="#" class="text-white hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white hover:text-primary"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white hover:text-primary"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white hover:text-primary"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="text-sm space-y-2">
+            <li><a href="/" class="hover:text-primary">Home</a></li>
+            <li><a href="/buyer/browse" class="hover:text-primary">Browse Books</a></li>
+            <li><a href="/pricing" class="hover:text-primary">Pricing</a></li>
+            <li><a href="/about" class="hover:text-primary">About Us</a></li>
+            <li><a href="/contact" class="hover:text-primary">Contact</a></li>
+          </ul>
+        </div>
+        
+        <!-- Categories -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Categories</h3>
+          <ul class="text-sm space-y-2">
+            <li><a href="/buyer/browse?genre=Fiction" class="hover:text-primary">Fiction</a></li>
+            <li><a href="/buyer/browse?genre=Non-Fiction" class="hover:text-primary">Non-Fiction</a></li>
+            <li><a href="/buyer/browse?genre=Mystery" class="hover:text-primary">Mystery</a></li>
+            <li><a href="/buyer/browse?genre=Science Fiction" class="hover:text-primary">Science Fiction</a></li>
+            <li><a href="/buyer/browse?genre=Biography" class="hover:text-primary">Biography</a></li>
+          </ul>
+        </div>
+        
+        <!-- Contact -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+          <ul class="text-sm space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+              <span>123 Book Street, Reading Lane, Bookville, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone-alt mr-2"></i>
+              <span>+91 8530206759</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-2"></i>
+              <span>support@bookish.in</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">&copy; 2025 Bookish. All rights reserved.</p>
+        <div class="mt-4 md:mt-0">
+          <ul class="flex space-x-4 text-sm">
+            <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-primary">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-primary">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="/js/main.js"></script>
+  <% if (typeof jsFile !== 'undefined') { %>
+    <script src="/js/<%= jsFile %>.js"></script>
+  <% } %>
+</body>
+</html>
+

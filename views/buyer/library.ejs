@@ -1,0 +1,142 @@
+<%- include('../partials/header') %>
+
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl font-bold mb-6">Your Library</h1>
+  
+  <% if (!books || books.length === 0) { %>
+    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+      <i class="fas fa-book text-5xl text-gray-300 mb-4"></i>
+      <h2 class="text-2xl font-semibold mb-2">Your library is empty</h2>
+      <p class="text-gray-600 mb-6">Looks like you haven't purchased any books yet.</p>
+      <a href="/buyer/browse" class="bg-primary text-dark px-6 py-3 rounded-md hover:bg-opacity-90 transition">
+        Browse Books
+      </a>
+    </div>
+  <% } else { %>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold">Your Reading Progress</h2>
+        <div class="mt-4 md:mt-0">
+          <select class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary">
+            <option value="all">All Books</option>
+            <option value="reading">Currently Reading</option>
+            <option value="completed">Completed</option>
+            <option value="not-started">Not Started</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% books.forEach(book => { %>
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <div class="flex p-4">
+              <img src="<%= book.coverImage %>" alt="<%= book.title %>" class="w-20 h-28 object-cover rounded mr-4">
+              <div class="flex-grow">
+                <h3 class="font-semibold mb-1 truncate"><%= book.title %></h3>
+                <p class="text-gray-600 text-sm mb-2"><%= book.author %></p>
+                <div class="flex items-center text-sm text-gray-600 mb-2">
+                  <i class="far fa-calendar-alt mr-1"></i>
+                  <span>Purchased: <%= new Date(book.purchaseDate).toLocaleDateString() %></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-primary h-2.5 rounded-full" style="width: <%= book.progress %>%"></div> 
+                </div>
+                <div class="flex justify-between text-xs mt-1">
+                  <span><%= book.progress %>% complete</span>
+                  <% if (book.progress === 100) { %>
+                    <span class="text-green-600">Completed</span>
+                  <% } else if (book.progress > 0) { %>
+                    <span class="text-blue-600">In Progress</span>
+                  <% } else { %>
+                    <span class="text-gray-600">Not Started</span>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 p-3 border-t border-gray-200 flex justify-between">
+              <a href="#" class="text-primary hover:text-dark text-sm">
+                <i class="fas fa-book-open mr-1"></i> Continue Reading
+              </a>
+              <a href="#" class="text-gray-600 hover:text-dark text-sm">
+                <i class="fas fa-info-circle mr-1"></i> Details
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    
+    <!-- Reading Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+            <i class="fas fa-book text-xl text-dark"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Total Books</h3>
+            <p class="text-3xl font-bold"><%= books.length %></p>
+          </div>
+        </div>
+        <div class="text-sm text-gray-600">
+          <p>Your collection is growing!</p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+            <i class="fas fa-check-circle text-xl text-dark"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Completed</h3>
+            <p class="text-3xl font-bold"><%= books.filter(b => b.progress === 100).length %></p>
+          </div>
+        </div>
+        <div class="text-sm text-gray-600">
+          <p><%= Math.round(books.filter(b => b.progress === 100).length / books.length * 100) %>% of your library</p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-primary rounded-full w-12 h-12 flex items-center justify-center mr-4">
+            <i class="fas fa-clock text-xl text-dark"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Reading Time</h3>
+            <p class="text-3xl font-bold">42h</p>
+          </div>
+        </div>
+        <div class="text-sm text-gray-600">
+          <p>This month</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Reading Recommendations -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-semibold mb-6">Recommended For You</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <% for(let i = 0; i < 4; i++) { %>
+          <div class="bg-gray-50 rounded-lg overflow-hidden">
+            <img src="/img/books/recommendation-<%= i+1 %>.jpg" alt="Recommended Book" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="font-semibold mb-1 truncate">Recommended Title <%= i+1 %></h3>
+              <p class="text-gray-600 text-sm mb-2">Author Name</p>
+              <div class="flex items-center">
+                <% for(let j = 0; j < 5; j++) { %>
+                  <i class="fas fa-star <%= j < 4 ? 'text-yellow-400' : 'text-gray-300' %> text-sm"></i>
+                <% } %>
+                <span class="text-gray-600 text-xs ml-1">(120)</span>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>
+
